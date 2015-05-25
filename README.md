@@ -1,5 +1,7 @@
 # XFLR5 to STL Translator
 
+[![Build Status](https://travis-ci.org/TimJay/xflr5-stl.svg?branch=master)](https://travis-ci.org/TimJay/xflr5-stl)
+
 The XFLR5 to STL translator bridges the design space with the CAD/CAM world. A wing exported from XFLR5 is converted to an ASCII STL file which can be imported in various CAD and CAM systems. 
 
 ## Limitations
