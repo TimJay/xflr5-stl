@@ -1,6 +1,7 @@
 package info.jagenberg.tim.xflr5_stl.io;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import info.jagenberg.tim.xflr5_stl.model.Wing;
 
 import java.io.BufferedReader;
@@ -10,6 +11,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -80,6 +82,8 @@ public class XFLR5ImportSTLExportTest {
 			assertEquals(" endloop", reader.readLine());
 			assertEquals("endfacet", reader.readLine());
 		}
+		List<String> allLines = Files.readAllLines(tempFile);
+		assertFalse("This export should not contain facets without normal.", allLines.stream().anyMatch(l -> "facet".equals(l)));
 	}
 
 }

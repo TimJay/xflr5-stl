@@ -65,31 +65,37 @@ public class STLExporter {
 		Airfoil lastAirfoil = lastRib.getAirfoil();
 		List<Coordinate> coords = lastAirfoil.getCoords();
 		int lastPt = coords.size() - 1;
-		for (int pt = 0; pt < coords.size() / 2 - 1; pt++) {
-			Vertex a = createVertex(lastAirfoil, pt, lastRib.getYPos(), lastRib.getChord(), lastRib.getOffset(), multiplier);
-			Vertex b = createVertex(lastAirfoil, pt + 1, lastRib.getYPos(), lastRib.getChord(), lastRib.getOffset(), multiplier);
-			Vertex c = createVertex(lastAirfoil, lastPt - pt - 1, lastRib.getYPos(), lastRib.getChord(), lastRib.getOffset(), multiplier);
-			Vertex d = createVertex(lastAirfoil, lastPt - pt, lastRib.getYPos(), lastRib.getChord(), lastRib.getOffset(), multiplier);
+		Vertex a = createVertex(lastAirfoil, 0, lastRib.getYPos(), lastRib.getChord(), lastRib.getOffset(), multiplier);
+		Vertex b = createVertex(lastAirfoil, 1, lastRib.getYPos(), lastRib.getChord(), lastRib.getOffset(), multiplier);
+		Vertex c = createVertex(lastAirfoil, lastPt - 1, lastRib.getYPos(), lastRib.getChord(), lastRib.getOffset(), multiplier);
+		Vertex d;
+		Facet f0 = new Facet();
+		f0.setV1(a);
+		f0.setV2(c);
+		f0.setV3(b);
+		newSolid.getFacets().add(f0);
+		for (int pt = 1; pt < coords.size() / 2 - 1; pt++) {
+			a = createVertex(lastAirfoil, pt, lastRib.getYPos(), lastRib.getChord(), lastRib.getOffset(), multiplier);
+			b = createVertex(lastAirfoil, pt + 1, lastRib.getYPos(), lastRib.getChord(), lastRib.getOffset(), multiplier);
+			c = createVertex(lastAirfoil, lastPt - pt - 1, lastRib.getYPos(), lastRib.getChord(), lastRib.getOffset(), multiplier);
+			d = createVertex(lastAirfoil, lastPt - pt, lastRib.getYPos(), lastRib.getChord(), lastRib.getOffset(), multiplier);
 			Facet f1 = new Facet();
-			f1.setN(calculateNormal(a, d, b));
 			f1.setV1(a);
-			f1.setV2(b);
-			f1.setV3(d);
+			f1.setV2(d);
+			f1.setV3(b);
 			newSolid.getFacets().add(f1);
 			Facet f2 = new Facet();
-			f2.setN(calculateNormal(b, d, c));
 			f2.setV1(b);
-			f2.setV2(c);
-			f2.setV3(d);
+			f2.setV2(d);
+			f2.setV3(c);
 			newSolid.getFacets().add(f2);
 		}
 		if (coords.size() % 2 == 1) {
 			int center = coords.size() /  2;
-			Vertex a = createVertex(lastAirfoil, center - 1, lastRib.getYPos(), lastRib.getChord(), lastRib.getOffset(), multiplier);
-			Vertex b = createVertex(lastAirfoil, center, lastRib.getYPos(), lastRib.getChord(), lastRib.getOffset(), multiplier);
-			Vertex c = createVertex(lastAirfoil, center + 1, lastRib.getYPos(), lastRib.getChord(), lastRib.getOffset(), multiplier);
+			a = createVertex(lastAirfoil, center - 1, lastRib.getYPos(), lastRib.getChord(), lastRib.getOffset(), multiplier);
+			b = createVertex(lastAirfoil, center, lastRib.getYPos(), lastRib.getChord(), lastRib.getOffset(), multiplier);
+			c = createVertex(lastAirfoil, center + 1, lastRib.getYPos(), lastRib.getChord(), lastRib.getOffset(), multiplier);
 			Facet f = new Facet();
-			f.setN(calculateNormal(a, c, b));
 			f.setV1(a);
 			f.setV2(b);
 			f.setV3(c);
@@ -183,7 +189,7 @@ public class STLExporter {
 		double v3x = facet.getV3().getX();
 		double v3y = facet.getV3().getY();
 		double v3z = facet.getV3().getZ();
-		if ((ni != 0.0) && (nj != 0.0) && (nk != 0.0)) {
+		if ((ni != 0.0) || (nj != 0.0) || (nk != 0.0)) {
 			sb.append("facet normal " + String.format("%12.6E", ni) + " " + String.format("%12.6E", nj) + " " + String.format("%12.6E", nk) + "\n");
 		} else {
 			sb.append("facet\n");

@@ -58,11 +58,11 @@ public class STLExporterTest {
 		Solid solid = STLExporter.convertWingToSolid(wing, 1.0);
 		assertNotNull(solid);
 		assertEquals("testwing", solid.getName());
-		assertEquals(4, solid.getFacets().size());
+		assertEquals(6, solid.getFacets().size());
 		Facet f1 = solid.getFacets().get(0);
 		Facet f2 = solid.getFacets().get(1);
-		Facet f3 = solid.getFacets().get(2);
-		Facet f4 = solid.getFacets().get(3);
+		Facet f3 = solid.getFacets().get(3);
+		Facet f4 = solid.getFacets().get(4);
 		assertEquals(vertex(0.0, 0.0, 0.0), f1.getV1());
 		assertEquals(vertex(0.0, 1.0, 0.0), f1.getV2());
 		assertEquals(vertex(1.0, 1.0, 1.0), f1.getV3());
