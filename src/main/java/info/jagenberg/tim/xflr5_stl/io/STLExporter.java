@@ -96,8 +96,8 @@ public class STLExporter {
 			b = createVertex(lastAirfoil, center, lastRib.getYPos(), lastRib.getChord(), lastRib.getOffset(), multiplier);
 			c = createVertex(lastAirfoil, center + 1, lastRib.getYPos(), lastRib.getChord(), lastRib.getOffset(), multiplier);
 			Facet f = new Facet();
-			f.setV1(a);
-			f.setV2(b);
+			f.setV1(b);
+			f.setV2(a);
 			f.setV3(c);
 			newSolid.getFacets().add(f);
 		}
